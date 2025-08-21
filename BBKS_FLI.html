@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Sacha Guerrini">
+<meta name="dcterms.date" content="2025-08-21">
+
+<title>Field-level inference: Bayesion hierarchical model for joint field-parameter sampling</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="exercise_FLI_3_files/libs/clipboard/clipboard.min.js"></script>
+<script src="exercise_FLI_3_files/libs/quarto-html/quarto.js"></script>
+<script src="exercise_FLI_3_files/libs/quarto-html/popper.min.js"></script>
+<script src="exercise_FLI_3_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="exercise_FLI_3_files/libs/quarto-html/anchor.min.js"></script>
+<link href="exercise_FLI_3_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="exercise_FLI_3_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="exercise_FLI_3_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="exercise_FLI_3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="exercise_FLI_3_files/libs/bootstrap/bootstrap-73a0fea6ec2cc7f6ab07812094791888.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="exercise_FLI_3_files/libs/quarto-diagram/mermaid.min.js"></script>
+<script src="exercise_FLI_3_files/libs/quarto-diagram/mermaid-init.js"></script>
+<link href="exercise_FLI_3_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Field-level inference: Bayesion hierarchical model for joint field-parameter sampling</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Sacha Guerrini </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 21, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="056bc668" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">"JAX_PLATFORM_NAME"</span>] <span class="op">=</span> <span class="st">"cpu"</span> <span class="co">#"cpu" if you don't have access to a GPU</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> urllib.request</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax.numpy <span class="im">as</span> jnp</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jax.scipy.stats <span class="im">import</span> norm <span class="im">as</span> normal</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.linalg <span class="im">as</span> la</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cycler <span class="im">import</span> cycler</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.cm <span class="im">as</span> cm</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colors <span class="im">import</span> LogNorm, SymLogNorm</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> mpatches</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.lines <span class="im">as</span> mlines</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.axes_grid1 <span class="im">import</span> make_axes_locatable</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Device used by Jax: </span><span class="sc">{</span>jax<span class="sc">.</span>devices()[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">123456</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Device used by Jax: TFRT_CPU_0</code></pre>
+</div>
+</div>
+<section id="note" class="level2">
+<h2 class="anchored" data-anchor-id="note">Note</h2>
+<p>This document is based on a hands-on session given at <a href="https://indico.iap.fr/event/25/">Les Houches summer school 2025 on the dark universe</a> on Field-Level Inference by Florent Leclercq. The content of this document is based on the original correction notebook and aims to go further by applying Implicit Likelihood Inference to the model introduced here.</p>
+</section>
+<section id="note-on-the-version" class="level2">
+<h2 class="anchored" data-anchor-id="note-on-the-version">Note on the version</h2>
+<p>This document is generated using <a href="https://docs.jax.dev/en/latest/"><code>jax</code></a> and its sampling library <a href="https://blackjax-devs.github.io/blackjax/"><code>blackjax</code></a>. <code>jax</code> is a rapidly evolving framework. To reproduce this document, one should use the following versions of the software:</p>
+<ul>
+<li><code>jax</code>: <code>0.5.0</code></li>
+<li><code>blackjax</code>: <code>1.2.5</code></li>
+<li><code>jaxili</code>: https://github.com/sachaguer/jaxili/tree/develop</li>
+</ul>
+</section>
+<section id="context" class="level2">
+<h2 class="anchored" data-anchor-id="context">Context</h2>
+<p>In this exercise, we will illustrate field-level inference using the BBKS cosmological model. We will focus on three parameters:</p>
+<ul>
+<li><span class="math inline">\(A_s\)</span>: the amplitude of the primordial power spectrum</li>
+<li><span class="math inline">\(n_s\)</span>: the spectral index of the primordial power spectrum</li>
+<li><span class="math inline">\(f_\mathrm{NL}\)</span>: a scalar parameter characterising the primordial non-Gaussianities</li>
+</ul>
+<p>The primordial gravitational potential <span class="math inline">\(\Phi_\mathrm{L}\)</span> is a Gaussian random field with zero mean and power spectrum:</p>
+<p><span class="math display">\[
+P(k) = A_s k^{n_s - 1}.
+\]</span></p>
+<p>This primordial potential is mapped to a ‘non-linear’ potential field:</p>
+<p><span class="math display">\[
+\Phi_\mathrm{NL} = \Phi_\mathrm{L} + f_\mathrm{NL} \Phi_\mathrm{L}^2.
+\]</span></p>
+<p>The non-linear potential and the density contrast field are linked by a transfer function in Fourier space,</p>
+<p><span class="math display">\[
+\Phi_{\mathrm{NL}}(k) = \mathcal{F}[\Phi_{\mathrm{NL}}(x)], \quad \delta(k) = D_1 \sqrt{k} T(k) \phi_{\mathrm{NL}}(k),
+\]</span></p>
+<p>where <span class="math inline">\(\mathcal{F}\)</span> is the Fast Fourier Transform (FFT) operator, <span class="math inline">\(T(k)\)</span> is the transfer function, and <span class="math inline">\(D_1\)</span> is the linear growth factor (in arbitrary units).</p>
+<p>The transfer function is modeled using:</p>
+<p><span class="math display">\[
+T(k) = \frac{\log(1 + \alpha q)}{\alpha q} \left(1 + \beta q + (\gamma q)^2 + (\delta q)^3 + (\epsilon q)^4\right)^{-1/4}, \quad q \equiv \frac{k}{\Gamma},
+\]</span></p>
+<p>with shape parameter <span class="math inline">\(\Gamma = \Omega_m h \exp(-\Omega_b - \sqrt{2h}\Omega_b/\Omega_m)\)</span>. Other cosmological parameters are fixed to the following values:</p>
+<section id="problem-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="problem-parameters">Problem parameters</h3>
+<div id="6bb13211" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">32</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="fl">1.0</span>  <span class="co"># box size</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The following parameters will be our fiducial values</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>A_s <span class="op">=</span> <span class="fl">6e-9</span>  <span class="co"># power spectrum normalisation, arbitrary units</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>n_s <span class="op">=</span> <span class="fl">0.96</span>  <span class="co"># spectral index</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>f_NL <span class="op">=</span> <span class="fl">2000.0</span>  <span class="co"># non-linear coupling parameter</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>D1 <span class="op">=</span> <span class="fl">1.732e7</span>  <span class="co"># growth factor of fluctuations at z=0, arbitrary units</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="cosmological-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="cosmological-parameters">Cosmological parameters</h3>
+<div id="1f449f53" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Omega_b <span class="op">=</span> <span class="fl">0.049</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Omega_m <span class="op">=</span> <span class="fl">0.315</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> <span class="fl">0.674</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>fb <span class="op">=</span> Omega_b <span class="op">/</span> Omega_m</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="bbks-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="bbks-parameters">BBKS parameters</h3>
+<div id="249383e4" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>shape <span class="op">=</span> Omega_m <span class="op">*</span> h <span class="op">*</span> np.exp(<span class="op">-</span>Omega_b <span class="op">-</span> np.sqrt(<span class="fl">2.0</span> <span class="op">*</span> h) <span class="op">*</span> fb)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">2.34</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> <span class="fl">3.89</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>gamma <span class="op">=</span> <span class="fl">16.1</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>delta <span class="op">=</span> <span class="fl">5.46</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>epsilon <span class="op">=</span> <span class="fl">6.71</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>When <span class="math inline">\(f_{\mathrm{NL}}=0\)</span>, the model is linear; therefore, <span class="math inline">\(\delta(x)\)</span> is a Gaussian random field with the BBKS power spectrum:</p>
+<p><span class="math display">\[
+P_\delta(k) = D_1^2 k T^2(k) P(k) = A_\mathrm{s} D_1^2 k^{n_\mathrm{s}}T^2(k).
+\]</span></p>
+<p>We model the data <span class="math inline">\(d\)</span> as a noisy observation of the <span class="math inline">\(\delta\)</span> field. We assume that the noise is zero-mean, additive and Gaussian, i.e.</p>
+<p><span class="math display">\[
+d(x) = \delta(x) + n(x), \quad n(x) \sim \mathcal{N}(0, N),
+\]</span></p>
+<p>where <span class="math inline">\(N\)</span> is the noise covariance matrix.</p>
+<p>The figures below illustrate the model and the data generation process. It has been generated for fiducial parameters and will be used as observed data in what follows.</p>
+<div id="cell-fig-primordial-potential" class="cell" data-execution_count="10">
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;&gt;:9: SyntaxWarning: invalid escape sequence '\m'
+&lt;&gt;:16: SyntaxWarning: invalid escape sequence '\m'
+&lt;&gt;:9: SyntaxWarning: invalid escape sequence '\m'
+&lt;&gt;:16: SyntaxWarning: invalid escape sequence '\m'
+/tmp/ipykernel_506644/926910477.py:9: SyntaxWarning: invalid escape sequence '\m'
+  ax0.set_title("$\\Phi_\mathrm{L}$")
+/tmp/ipykernel_506644/926910477.py:16: SyntaxWarning: invalid escape sequence '\m'
+  ax1.set_title("$\\Phi_\mathrm{NL}=\\Phi_\mathrm{L}+f_\mathrm{NL}\\Phi_\mathrm{L}^2$")</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-primordial-potential" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-primordial-potential-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="exercise_FLI_3_files/figure-html/fig-primordial-potential-output-2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-primordial-potential-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Visualisation of the primordial potential and the density contrast field
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-fig-observation" class="cell" data-execution_count="15">
+<div class="cell-output cell-output-display">
+<div id="fig-observation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-observation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="exercise_FLI_3_files/figure-html/fig-observation-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-observation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Visualisation of the observation. <em>Left</em>: the groundtruth density constrast, <em>Middle</em>: the mask and noise matrix, <em>Right</em>: the observed data.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="inferring-the-parameters-using-the-field" class="level2">
+<h2 class="anchored" data-anchor-id="inferring-the-parameters-using-the-field">Inferring the parameters using the field</h2>
+<p>Using Bayesian inference, we want to estimate the parameters <span class="math inline">\(\boldsymbol{\theta} = (A_\mathrm{s}, n_\mathrm{s}, f_\mathrm{NL})\)</span> given the data <span class="math inline">\(d\)</span> and the noise variance field <span class="math inline">\(N\)</span>.</p>
+<p>To do so, we use Bayes’ theorem:</p>
+<p><span class="math display">\[
+p(\boldsymbol{\theta} | d) \propto p(d | \boldsymbol{\theta}) p(\boldsymbol{\theta}).
+\]</span></p>
+<p>Here our data <span class="math inline">\(d\)</span> is the observed field, hence the name field-level inference. In the previous section, we have build a Bayesian Herarchical Model (BHM) for the data, which specifies the likelihood.</p>
+<p>However, the likelihood is defined at the pixel level. We have access to <span class="math inline">\(p(\boldsymbol{\theta}, z | d)\)</span> where <span class="math inline">\(z\)</span> are the primordial pixel values. In practice, to get constraints on the cosmological parameters only, we must marginalise on pixel values <span class="math inline">\(z\)</span>.</p>
+<p><span class="math display">\[
+p(\boldsymbol{\theta} | d) = \int p(\boldsymbol{\theta}, z | d) \, dz.
+\]</span></p>
+<p>This integral is intractable in practice. Sampling cosmological parameters and initial conditions is a challenging task as the problem is very high dimensional. It requires sampling techniques that are not sensitive to the curse of dimensionality such as Hamiltonian Monte Carlo.</p>
+<p>A first task is to write the log-prior, log-likelihood and log-posterior functions for the BHM.</p>
+<p>We can summarise the model using the following diagram:</p>
+<div id="fig-bhm" class="figure quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bhm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  A(("$$A_\mathrm{s} \sim \mathcal{N}(\mu_{A_\mathrm{s}}, \sigma_{A_\mathrm{s}})$$")) --&gt; C["$$P(k)$$"]
+  B(("$$n_\mathrm{s} \sim \mathcal{N}(\mu_{n_\mathrm{s}}, \sigma_{n_\mathrm{s}})$$")) --&gt; C
+  C --&gt; D(("$$\Phi_\mathrm{L} \sim \mathcal{N}(0, P(k))$$"))
+  D --&gt; F["$$\Phi_\mathrm{NL}$$"]
+  E(("$$f_\mathrm{NL} \sim \mathcal{N}(\mu_{f_\mathrm{NL}}, \sigma_{f_\mathrm{NL}})$$")) --&gt; F
+  F --&gt; G["$$\delta$$"]
+  G --&gt; I["$$d$$"]
+  H(("$$n \sim \mathcal{N}(0, N)$$")) --&gt; I
+  I &lt;--&gt; J[observation]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bhm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Bayesian hierarchical model for field-level inference. Round boxes are sampled from and rectangular boxes are derived.
+</figcaption>
+</figure>
+</div>
+<p>In what follows, we will use the following values for the prior of the cosmological parameters. The likelihood is explicitely defined via the choices of distribution from which the parameters (prior) and latent variables are sampled from. Probabilistic programming languages such as <code>pyro</code> or <code>numpyro</code> implement BHMs following the graph structure sketched in <a href="#fig-bhm" class="quarto-xref">Figure&nbsp;3</a>.</p>
+<div id="5b6b8431" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define hyperparameters for the prior</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>A_s_scale <span class="op">=</span> <span class="fl">6e-9</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>f_NL_scale <span class="op">=</span> <span class="fl">2e3</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>mu_A_s <span class="op">=</span> <span class="fl">0.9</span> <span class="op">*</span> A_s_scale</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>sigma_A_s <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span> A_s_scale</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>mu_n_s <span class="op">=</span> <span class="fl">0.95</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>sigma_n_s <span class="op">=</span> <span class="fl">0.01</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>mu_f_NL <span class="op">=</span> <span class="fl">0.75</span> <span class="op">*</span> f_NL_scale</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>sigma_f_NL <span class="op">=</span> <span class="fl">0.25</span> <span class="op">*</span> f_NL_scale</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The output of the log-prior, log-likelihood and log-posterior functions is a scalar value and can be found for various examples below.</p>
+<div id="bfc894ae" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test the functions with the ground truth white noise field</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> pack_theta(A_s<span class="op">=</span>A_s, n_s<span class="op">=</span>n_s, f_NL<span class="op">=</span>f_NL, field<span class="op">=</span>white_noise)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>log_prior(theta), log_likelihood(theta, data, noise_variance_field), log_posterior(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    theta, data, noise_variance_field</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="116">
+<pre><code>(Array(-458.7011, dtype=float32),
+ Array(-554.5359, dtype=float32),
+ Array(-1013.237, dtype=float32))</code></pre>
+</div>
+</div>
+<div id="ab2904b0" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a new white noise field and compute the log-likelihood</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>white_noise_2 <span class="op">=</span> jax.random.normal(jax.random.PRNGKey(<span class="dv">2</span>), (N, N))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>theta_2 <span class="op">=</span> pack_theta(A_s<span class="op">=</span>A_s, n_s<span class="op">=</span>n_s, f_NL<span class="op">=</span>f_NL, field<span class="op">=</span>white_noise_2)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>log_likelihood(theta_2, data, noise_variance_field), log_prior(theta_2), log_posterior(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    theta_2, data, noise_variance_field</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="117">
+<pre><code>(Array(-2063638.9, dtype=float32),
+ Array(-536.76605, dtype=float32),
+ Array(-2064175.6, dtype=float32))</code></pre>
+</div>
+</div>
+<div id="58a0d944" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the cosmological parameters and compute the log-likelihood</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>A_s_new <span class="op">=</span> <span class="fl">7e-9</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>n_s_new <span class="op">=</span> <span class="fl">0.98</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>f_NL_new <span class="op">=</span> <span class="fl">2500.0</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>theta_3 <span class="op">=</span> pack_theta(A_s<span class="op">=</span>A_s_new, n_s<span class="op">=</span>n_s_new, f_NL<span class="op">=</span>f_NL_new, field<span class="op">=</span>white_noise_2)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>log_likelihood(theta_3, data, noise_variance_field), log_prior(theta_3), log_posterior(</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    theta_3, data, noise_variance_field</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="118">
+<pre><code>(Array(-2448481.8, dtype=float32),
+ Array(-545.3216, dtype=float32),
+ Array(-2449027., dtype=float32))</code></pre>
+</div>
+</div>
+<section id="sample-the-posterior-using-field-level-inference-explicit" class="level3">
+<h3 class="anchored" data-anchor-id="sample-the-posterior-using-field-level-inference-explicit">Sample the posterior using field-level inference (explicit)</h3>
+<p>To efficiently sample parameters in a high-dimensional space, one must rely on gradient-based Markov Chain Monte Carlo (MCMC) techniques such as HMC. <code>jax</code> is a powerful library that uses autodiffertiation to compute gradient of functions in such a way that, given the log-likelihood function is written in <code>jax</code>, we have access to it for free.</p>
+<p>In what follows, we use the No-U-Turn Sampler (NUTS) from the <code>blackjax</code> library, which is a JAX implementation of the NUTS algorithm to sample the cosmological parameters and the initial conditions of the field at the same time. <code>jax</code> can run automatically on GPU. In this document, we ran on CPU on a laptop and sampling five chains of <span class="math inline">\(10,000\)</span> samples each takes around two hours. I have not checked the speed up obtained by running on GPU.</p>
+<p>It is possible to speed up the sampling by using Gibbs sampling to sample the field with HMC and the cosmological parameters with e.g.&nbsp;slice sampling. The implementation of it currently does not perform correctly. In what follows, diagnostics of the chains will be presented using the NUTS algorithm.</p>
+<p><strong>Why is it more efficient that way?</strong></p>
+<section id="diagnose-the-chains" class="level4">
+<h4 class="anchored" data-anchor-id="diagnose-the-chains">Diagnose the chains</h4>
+<section id="log-likelihood" class="level5">
+<h5 class="anchored" data-anchor-id="log-likelihood">Log-likelihood</h5>
+<div id="cell-fig-log-likelihood-trace" class="cell" data-execution_count="27">
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;&gt;:13: SyntaxWarning: invalid escape sequence '\m'
+&lt;&gt;:13: SyntaxWarning: invalid escape sequence '\m'
+/tmp/ipykernel_506644/3802684793.py:13: SyntaxWarning: invalid escape sequence '\m'
+  ax.set_ylabel("$-\\log \mathcal{L}$")</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-log-likelihood-trace" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-log-likelihood-trace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="exercise_FLI_3_files/figure-html/fig-log-likelihood-trace-output-2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-log-likelihood-trace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Log-likelihood trace plot for each chain. The dashed line indicates a burn-in period of a hundred samples.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="trace-plots" class="level5">
+<h5 class="anchored" data-anchor-id="trace-plots">Trace plots</h5>
+<p>We can then check the trace plots for parameters such pixels and cosmological parameters.</p>
+<div id="cell-fig-trace-plot-pixel" class="cell" data-execution_count="28">
+<div class="cell-output cell-output-display">
+<div id="fig-trace-plot-pixel" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-trace-plot-pixel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="exercise_FLI_3_files/figure-html/fig-trace-plot-pixel-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trace-plot-pixel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Trace plots for the pixel values at (10, 20) and (25, 10) for each chain. The dashed line indicates the groundtruth value.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-fig-trace-plot-cosmo" class="cell" data-execution_count="29">
+<div class="cell-output cell-output-display">
+<div id="fig-trace-plot-cosmo" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-trace-plot-cosmo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="exercise_FLI_3_files/figure-html/fig-trace-plot-cosmo-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trace-plot-cosmo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Trace plots for the cosmological parameters <span class="math inline">\(A_\mathrm{s}\)</span>, <span class="math inline">\(n_\mathrm{s}\)</span>, and <span class="math inline">\(f_\mathrm{NL}\)</span> for each chain. The dashed line indicates the groundtruth value and the shaded area the <span class="math inline">\(2\sigma\)</span> region of the Gaussian prior.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sequential-posterior-power-spectrum" class="level5">
+<h5 class="anchored" data-anchor-id="sequential-posterior-power-spectrum">Sequential posterior power spectrum</h5>
+<p>Given our samples, we can do posterior predictive checks to further ensure that the chain has converged to the correct posterior. To do so, one needs to run the data model using the samples as input. We perform posterior predictive cheks by looking at the power spectrum of the reconstructred signal and the ground truth. In practice, the groundtruth signal will not be available but we can compare against perturbation theory predictions.</p>
+<div id="cell-fig-power-spectrum-signal" class="cell" data-execution_count="32">
+<div class="cell-output cell-output-display">
+<div id="fig-power-spectrum-signal" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-power-spectrum-signal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="exercise_FLI_3_files/figure-html/fig-power-spectrum-signal-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-power-spectrum-signal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Sequential posterior power spectrum of the reconstructed signal. The dashed line indicates the groundtruth power spectrum.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-fig-power-spectrum-delta" class="cell" data-execution_count="34">
+<div class="cell-output cell-output-display">
+<div id="fig-power-spectrum-delta" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-power-spectrum-delta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="exercise_FLI_3_files/figure-html/fig-power-spectrum-delta-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-power-spectrum-delta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Sequential posterior power spectrum of the reconstructed <span class="math inline">\(\delta\)</span> field. The dashed line indicates the groundtruth power spectrum of the <span class="math inline">\(\delta\)</span> field.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="effective-sample-size-in-the-chains" class="level5">
+<h5 class="anchored" data-anchor-id="effective-sample-size-in-the-chains">Effective sample size in the chains</h5>
+<p>When running an MCMC, samples are not independent. The effective sample size (ESS) is a measure of how many independent samples we have in our MCMC chain. It can be computed using the integrated autocorrelation time, which quantifies the correlation between samples at different lags. We here compute the ESS using function available in the <a href="https://emcee.readthedocs.io/en/stable/tutorials/autocorr/"><code>emcee</code> documentation</a>. As the error of an MCMC estimator reduces with the number of samples, it is important to have a sufficiently large ESS.</p>
+<div id="cell-fig-ess-pixels" class="cell" data-execution_count="37">
+<div class="cell-output cell-output-display">
+<div id="fig-ess-pixels" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ess-pixels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="exercise_FLI_3_files/figure-html/fig-ess-pixels-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ess-pixels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Effective sample size (ESS) for the pixels (10, 20) and (25, 10) in the field for each chain. The dashed line indicates the burn-in period.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-fig-ess-cosmo" class="cell" data-execution_count="38">
+<div class="cell-output cell-output-display">
+<div id="fig-ess-cosmo" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ess-cosmo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="exercise_FLI_3_files/figure-html/fig-ess-cosmo-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ess-cosmo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Effective sample size (ESS) for the cosmological parameters <span class="math inline">\(A_\mathrm{s}\)</span>, <span class="math inline">\(n_\mathrm{s}\)</span>, and <span class="math inline">\(f_\mathrm{NL}\)</span> for each chain. The dashed line indicates the burn-in period.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="gelman-rubin-test" class="level5">
+<h5 class="anchored" data-anchor-id="gelman-rubin-test">Gelman-Rubin test</h5>
+<p>Another useful test is the Gelman-Rubin (GR) test. It assess if the samples are uncorrelated by computing the ratio between the variance within the chains and between multiple independant chains.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><span class="math inline">\(m\)</span>: number of chains</li>
+<li><span class="math inline">\(n\)</span>: number of samples per chain</li>
+</ul>
+<p><strong>Definitions</strong></p>
+<ul>
+<li>“between” chains variance: <span class="math display">\[\begin{equation}
+B \equiv \frac{n}{m-1} \sum_{j=1}^m \left( \bar{\psi}_{. j} - \bar{\psi}_{..} \right)^2 \quad \mathrm{where} \quad \bar{\psi}_{. j} = \frac{1}{n} \sum_{i=1}^n \psi_{ij} \quad \mathrm{and} \quad \bar{\psi}_{..} = \frac{1}{m} \sum_{j=1}^m \bar{\psi}_{.j}
+\end{equation}\]</span></li>
+<li>“within” chains variance: <span class="math display">\[\begin{equation}
+W \equiv \frac{1}{m} \sum_{j=1}^m s_j^2 \quad \mathrm{where} \quad s_j^2 = \frac{1}{n-1} \sum_{i=1}^n \left( \psi_{ij} - \bar{\psi}_{.j} \right)^2
+\end{equation}\]</span></li>
+</ul>
+<p><strong>Estimators</strong>:</p>
+<p>Estimators of the marginal posterior variance of the estimand:</p>
+<ul>
+<li><span class="math inline">\(\widehat{\mathrm{var}}^- \equiv W\)</span>: underestimates the variance</li>
+<li><span class="math inline">\(\widehat{\mathrm{var}}^+ \equiv \frac{n - 1}{n}W + \frac{1}{n} B\)</span>: overestimates the variance</li>
+</ul>
+<p><strong>Test</strong>:</p>
+<ul>
+<li>Potential scale reduction factor: <span class="math inline">\(\widehat{R} \equiv \sqrt{\frac{\widehat{\mathrm{var}}^+}{\widehat{\mathrm{var}}^-}}\)</span></li>
+<li>Test: <span class="math inline">\(\widehat{R} \rightarrow 1\)</span> as <span class="math inline">\(n \rightarrow \infty\)</span></li>
+</ul>
+<div id="e91ecbae" class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The Gelman-Rubin function expects (n_chains, n_samples, n_variates)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Rhat <span class="op">=</span> gelman_rubin(jnp.array([samples_chain[c] <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(N_chains)]))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run Gelman-Rubin</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>Rhat_A_s <span class="op">=</span> Rhat[<span class="dv">0</span>]</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>Rhat_n_s <span class="op">=</span> Rhat[<span class="dv">1</span>]</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>Rhat_fNL <span class="op">=</span> Rhat[<span class="dv">2</span>]</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>Rhat_field_flat <span class="op">=</span> Rhat[<span class="dv">3</span>:]  <span class="co"># shape: (N*N,)</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>Rhat_field <span class="op">=</span> Rhat_field_flat.reshape((N, N))</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Gelman-Rubin stats:"</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"A_s:"</span>, Rhat_A_s)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"n_s:"</span>, Rhat_n_s)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"fNL:"</span>, Rhat_fNL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Gelman-Rubin stats:
+A_s: 1.0003575
+n_s: 0.9999679
+fNL: 1.0003572</code></pre>
+</div>
+</div>
+<div id="cell-fig-gelman-rubin" class="cell" data-execution_count="41">
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;&gt;:4: SyntaxWarning: invalid escape sequence '\h'
+&lt;&gt;:4: SyntaxWarning: invalid escape sequence '\h'
+/tmp/ipykernel_506644/2195658240.py:4: SyntaxWarning: invalid escape sequence '\h'
+  ax.set_title("Gelman-Rubin statistic $\hat{R}$")</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-gelman-rubin" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gelman-rubin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="exercise_FLI_3_files/figure-html/fig-gelman-rubin-output-2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gelman-rubin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Gelman-Rubin statistic <span class="math inline">\(\hat{R}\)</span> for the field.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="visualise-summaries-of-the-chains" class="level3">
+<h3 class="anchored" data-anchor-id="visualise-summaries-of-the-chains">Visualise summaries of the chains</h3>
+<p>Now that we have carefully checked the convergence of the MCMC chains, we can visualise the results.</p>
+<p>First, we can use the samples to reconstruct the <span class="math inline">\(\delta\)</span> field and check that it visually matches the truth.</p>
+<div id="fe4d1940" class="cell" data-execution_count="45">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="exercise_FLI_3_files/figure-html/cell-46-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-fig-reconstruction" class="cell" data-execution_count="46">
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;&gt;:10: SyntaxWarning: invalid escape sequence '\m'
+&lt;&gt;:17: SyntaxWarning: invalid escape sequence '\m'
+&lt;&gt;:29: SyntaxWarning: invalid escape sequence '\m'
+&lt;&gt;:10: SyntaxWarning: invalid escape sequence '\m'
+&lt;&gt;:17: SyntaxWarning: invalid escape sequence '\m'
+&lt;&gt;:29: SyntaxWarning: invalid escape sequence '\m'
+/tmp/ipykernel_506644/3114878575.py:10: SyntaxWarning: invalid escape sequence '\m'
+  ax0a.set_title("Groundtruth $\\Phi_\mathrm{L}$")
+/tmp/ipykernel_506644/3114878575.py:17: SyntaxWarning: invalid escape sequence '\m'
+  ax1a.set_title("Empirical mean of $\\Phi_\mathrm{L}$ samples")
+/tmp/ipykernel_506644/3114878575.py:29: SyntaxWarning: invalid escape sequence '\m'
+  ax2a.set_title("Empirical variance of $\\Phi_\mathrm{L}$ samples")</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-reconstruction" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reconstruction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="exercise_FLI_3_files/figure-html/fig-reconstruction-output-2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reconstruction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12: Reconstruction of the <span class="math inline">\(\Phi_\mathrm{L}\)</span>, <span class="math inline">\(\Phi_\mathrm{NL}\)</span>, and <span class="math inline">\(\delta\)</span> fields from the initial conditions and cosmological parameters samples. The first row shows the initial conditions, the second row the groundtruth fields, the third row shows the empirical mean of the samples, and the fourth row shows the empirical variance of the samples.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can finally visualise the posterior samples in the cosmological parameters space.</p>
+<div id="cell-fig-cosmo-params" class="cell" data-execution_count="48">
+<div class="cell-output cell-output-display">
+<div id="fig-cosmo-params" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cosmo-params-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="exercise_FLI_3_files/figure-html/fig-cosmo-params-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cosmo-params-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13: Posterior samples in the cosmological parameters space. The blue contours show the prior distribution, while the green filled contours show the posterior distribution. The lines indicate the one, two, and three <span class="math inline">\(\sigma\)</span> confidence level. The dashed lines indicate the groundtruth.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>This result has been obtained sampling all latent variables. It is also possible to extract information at the field-level without relying on high-dimensional sampling of the initial conditions.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
