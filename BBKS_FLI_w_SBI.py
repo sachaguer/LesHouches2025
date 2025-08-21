@@ -839,7 +839,7 @@ ax0.legend(
 
 ax1 = fig.add_subplot(2, 2, 3)
 
-nContourLevels = len(chainLevels)
+nContourLevels = 3
 ax1.contourf(
     A_s_grid,
     f_NL_grid,

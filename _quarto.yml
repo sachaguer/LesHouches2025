@@ -3,6 +3,7 @@ project:
   output-dir: site   # GitHub Pages expects /docs or root
   render:
     - BBKS_FLI.py
+    - BBKS_FLI_w_SBI.py
 
 website:
   title: "Field-Level Inference cosmological toy model"
@@ -10,3 +11,5 @@ website:
     left:
       - href: BBKS_FLI.py
         text: Explicit Inference
+      - href: BBKS_FLI_w_SBI.py
+        text: Implicit Inference

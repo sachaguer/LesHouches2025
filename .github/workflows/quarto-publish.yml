@@ -6,12 +6,33 @@ on:
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.12"]
 
     steps:
       # Check out your repo
       - name: Check out repository
         uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Check Python version
+        run: python --version
+
+      # Install dependencies
+      - name: Install dependencies
+        run: python -m pip install git+https://github.com/sachaguer/jaxili.git@develop
+      
+      #Install blackjax
+      - name: Install blackjax
+        run: python -m pip install blackjax
 
       # Install Quarto
       - name: Set up Quarto
