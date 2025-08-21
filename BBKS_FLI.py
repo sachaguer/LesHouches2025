@@ -15,7 +15,7 @@
 import numpy as np
 import os
 
-os.environ["JAX_PLATFORM_NAME"] = "gpu" #"cpu" if you don't have access to a GPU
+os.environ["JAX_PLATFORM_NAME"] = "cpu" #"cpu" if you don't have access to a GPU
 import urllib.request
 import jax
 import jax.numpy as jnp
