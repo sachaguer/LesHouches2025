@@ -1,0 +1,10 @@
+project:
+  type: website
+  output-dir: site   # GitHub Pages expects /docs or root
+
+website:
+  title: "Field-Level Inference cosmological toy model"
+  navbar:
+    left:
+      - href: BBKS_FLI.py
+        text: Explicit Inference

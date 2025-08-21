@@ -9,7 +9,7 @@
 <meta name="author" content="Sacha Guerrini">
 <meta name="dcterms.date" content="2025-08-21">
 
-<title>Field-level inference: Bayesion hierarchical model for joint field-parameter sampling</title>
+<title>Field-level inference: Bayesion hierarchical model for joint field-parameter sampling – Field-Level Inference cosmological toy model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,19 +59,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="exercise_FLI_3_files/libs/clipboard/clipboard.min.js"></script>
-<script src="exercise_FLI_3_files/libs/quarto-html/quarto.js"></script>
-<script src="exercise_FLI_3_files/libs/quarto-html/popper.min.js"></script>
-<script src="exercise_FLI_3_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="exercise_FLI_3_files/libs/quarto-html/anchor.min.js"></script>
-<link href="exercise_FLI_3_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="exercise_FLI_3_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="exercise_FLI_3_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="exercise_FLI_3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="exercise_FLI_3_files/libs/bootstrap/bootstrap-73a0fea6ec2cc7f6ab07812094791888.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="exercise_FLI_3_files/libs/quarto-diagram/mermaid.min.js"></script>
-<script src="exercise_FLI_3_files/libs/quarto-diagram/mermaid-init.js"></script>
-<link href="exercise_FLI_3_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-f2647fb721c5179e66f6c121cc990c7c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -105,10 +138,40 @@ window.Quarto = {
 
 </head>
 
-<body class="fullcontent">
+<body class="nav-fixed fullcontent">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Field-Level Inference cosmological toy model</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./BBKS_FLI.html" aria-current="page"> 
+<span class="menu-text">Explicit Inference</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -142,11 +205,11 @@ window.Quarto = {
 </header>
 
 
-<div id="056bc668" class="cell" data-execution_count="1">
+<div id="c83d6ed8" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">"JAX_PLATFORM_NAME"</span>] <span class="op">=</span> <span class="st">"cpu"</span> <span class="co">#"cpu" if you don't have access to a GPU</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">"JAX_PLATFORM_NAME"</span>] <span class="op">=</span> <span class="st">"gpu"</span> <span class="co">#"cpu" if you don't have access to a GPU</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> urllib.request</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax.numpy <span class="im">as</span> jnp</span>
@@ -164,7 +227,7 @@ window.Quarto = {
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">123456</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Device used by Jax: TFRT_CPU_0</code></pre>
+<pre><code>Device used by Jax: cuda:0</code></pre>
 </div>
 </div>
 <section id="note" class="level2">
@@ -208,7 +271,7 @@ T(k) = \frac{\log(1 + \alpha q)}{\alpha q} \left(1 + \beta q + (\gamma q)^2 + (\
 <p>with shape parameter <span class="math inline">\(\Gamma = \Omega_m h \exp(-\Omega_b - \sqrt{2h}\Omega_b/\Omega_m)\)</span>. Other cosmological parameters are fixed to the following values:</p>
 <section id="problem-parameters" class="level3">
 <h3 class="anchored" data-anchor-id="problem-parameters">Problem parameters</h3>
-<div id="6bb13211" class="cell" data-execution_count="5">
+<div id="037dc0c2" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">32</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="fl">1.0</span>  <span class="co"># box size</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The following parameters will be our fiducial values</span></span>
@@ -220,7 +283,7 @@ T(k) = \frac{\log(1 + \alpha q)}{\alpha q} \left(1 + \beta q + (\gamma q)^2 + (\
 </section>
 <section id="cosmological-parameters" class="level3">
 <h3 class="anchored" data-anchor-id="cosmological-parameters">Cosmological parameters</h3>
-<div id="1f449f53" class="cell" data-execution_count="6">
+<div id="2a3e1d4d" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Omega_b <span class="op">=</span> <span class="fl">0.049</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Omega_m <span class="op">=</span> <span class="fl">0.315</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> <span class="fl">0.674</span></span>
@@ -229,7 +292,7 @@ T(k) = \frac{\log(1 + \alpha q)}{\alpha q} \left(1 + \beta q + (\gamma q)^2 + (\
 </section>
 <section id="bbks-parameters" class="level3">
 <h3 class="anchored" data-anchor-id="bbks-parameters">BBKS parameters</h3>
-<div id="249383e4" class="cell" data-execution_count="7">
+<div id="5f2c1cda" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>shape <span class="op">=</span> Omega_m <span class="op">*</span> h <span class="op">*</span> np.exp(<span class="op">-</span>Omega_b <span class="op">-</span> np.sqrt(<span class="fl">2.0</span> <span class="op">*</span> h) <span class="op">*</span> fb)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">2.34</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> <span class="fl">3.89</span></span>
@@ -253,16 +316,16 @@ d(x) = \delta(x) + n(x), \quad n(x) \sim \mathcal{N}(0, N),
 &lt;&gt;:16: SyntaxWarning: invalid escape sequence '\m'
 &lt;&gt;:9: SyntaxWarning: invalid escape sequence '\m'
 &lt;&gt;:16: SyntaxWarning: invalid escape sequence '\m'
-/tmp/ipykernel_506644/926910477.py:9: SyntaxWarning: invalid escape sequence '\m'
+/tmp/ipykernel_551932/926910477.py:9: SyntaxWarning: invalid escape sequence '\m'
   ax0.set_title("$\\Phi_\mathrm{L}$")
-/tmp/ipykernel_506644/926910477.py:16: SyntaxWarning: invalid escape sequence '\m'
+/tmp/ipykernel_551932/926910477.py:16: SyntaxWarning: invalid escape sequence '\m'
   ax1.set_title("$\\Phi_\mathrm{NL}=\\Phi_\mathrm{L}+f_\mathrm{NL}\\Phi_\mathrm{L}^2$")</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div id="fig-primordial-potential" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-primordial-potential-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="exercise_FLI_3_files/figure-html/fig-primordial-potential-output-2.png" class="img-fluid figure-img">
+<img src="BBKS_FLI_files/figure-html/fig-primordial-potential-output-2.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-primordial-potential-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Visualisation of the primordial potential and the density contrast field
@@ -276,7 +339,7 @@ Figure&nbsp;1: Visualisation of the primordial potential and the density contras
 <div id="fig-observation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-observation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="exercise_FLI_3_files/figure-html/fig-observation-output-1.png" class="img-fluid figure-img">
+<img src="BBKS_FLI_files/figure-html/fig-observation-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-observation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Visualisation of the observation. <em>Left</em>: the groundtruth density constrast, <em>Middle</em>: the mask and noise matrix, <em>Right</em>: the observed data.
@@ -333,7 +396,7 @@ Figure&nbsp;3: Bayesian hierarchical model for field-level inference. Round boxe
 </figure>
 </div>
 <p>In what follows, we will use the following values for the prior of the cosmological parameters. The likelihood is explicitely defined via the choices of distribution from which the parameters (prior) and latent variables are sampled from. Probabilistic programming languages such as <code>pyro</code> or <code>numpyro</code> implement BHMs following the graph structure sketched in <a href="#fig-bhm" class="quarto-xref">Figure&nbsp;3</a>.</p>
-<div id="5b6b8431" class="cell" data-execution_count="16">
+<div id="25318bb7" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define hyperparameters for the prior</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>A_s_scale <span class="op">=</span> <span class="fl">6e-9</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>f_NL_scale <span class="op">=</span> <span class="fl">2e3</span></span>
@@ -345,32 +408,32 @@ Figure&nbsp;3: Bayesian hierarchical model for field-level inference. Round boxe
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>sigma_f_NL <span class="op">=</span> <span class="fl">0.25</span> <span class="op">*</span> f_NL_scale</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The output of the log-prior, log-likelihood and log-posterior functions is a scalar value and can be found for various examples below.</p>
-<div id="bfc894ae" class="cell" data-execution_count="19">
+<div id="51b6bf4d" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test the functions with the ground truth white noise field</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> pack_theta(A_s<span class="op">=</span>A_s, n_s<span class="op">=</span>n_s, f_NL<span class="op">=</span>f_NL, field<span class="op">=</span>white_noise)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>log_prior(theta), log_likelihood(theta, data, noise_variance_field), log_posterior(</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    theta, data, noise_variance_field</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="116">
-<pre><code>(Array(-458.7011, dtype=float32),
- Array(-554.5359, dtype=float32),
- Array(-1013.237, dtype=float32))</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>(Array(-458.70108, dtype=float32),
+ Array(-554.5357, dtype=float32),
+ Array(-1013.2368, dtype=float32))</code></pre>
 </div>
 </div>
-<div id="ab2904b0" class="cell" data-execution_count="20">
+<div id="3bc7272f" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a new white noise field and compute the log-likelihood</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>white_noise_2 <span class="op">=</span> jax.random.normal(jax.random.PRNGKey(<span class="dv">2</span>), (N, N))</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>theta_2 <span class="op">=</span> pack_theta(A_s<span class="op">=</span>A_s, n_s<span class="op">=</span>n_s, f_NL<span class="op">=</span>f_NL, field<span class="op">=</span>white_noise_2)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>log_likelihood(theta_2, data, noise_variance_field), log_prior(theta_2), log_posterior(</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    theta_2, data, noise_variance_field</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="117">
-<pre><code>(Array(-2063638.9, dtype=float32),
- Array(-536.76605, dtype=float32),
- Array(-2064175.6, dtype=float32))</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>(Array(-2063637.8, dtype=float32),
+ Array(-536.7661, dtype=float32),
+ Array(-2064174.5, dtype=float32))</code></pre>
 </div>
 </div>
-<div id="58a0d944" class="cell" data-execution_count="21">
+<div id="752b3a7e" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the cosmological parameters and compute the log-likelihood</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>A_s_new <span class="op">=</span> <span class="fl">7e-9</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>n_s_new <span class="op">=</span> <span class="fl">0.98</span></span>
@@ -379,10 +442,10 @@ Figure&nbsp;3: Bayesian hierarchical model for field-level inference. Round boxe
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>log_likelihood(theta_3, data, noise_variance_field), log_prior(theta_3), log_posterior(</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    theta_3, data, noise_variance_field</span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="118">
-<pre><code>(Array(-2448481.8, dtype=float32),
- Array(-545.3216, dtype=float32),
- Array(-2449027., dtype=float32))</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>(Array(-2448480.5, dtype=float32),
+ Array(-545.32166, dtype=float32),
+ Array(-2449025.8, dtype=float32))</code></pre>
 </div>
 </div>
 <section id="sample-the-posterior-using-field-level-inference-explicit" class="level3">
@@ -399,14 +462,14 @@ Figure&nbsp;3: Bayesian hierarchical model for field-level inference. Round boxe
 <div class="cell-output cell-output-stderr">
 <pre><code>&lt;&gt;:13: SyntaxWarning: invalid escape sequence '\m'
 &lt;&gt;:13: SyntaxWarning: invalid escape sequence '\m'
-/tmp/ipykernel_506644/3802684793.py:13: SyntaxWarning: invalid escape sequence '\m'
+/tmp/ipykernel_551932/3802684793.py:13: SyntaxWarning: invalid escape sequence '\m'
   ax.set_ylabel("$-\\log \mathcal{L}$")</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div id="fig-log-likelihood-trace" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-log-likelihood-trace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="exercise_FLI_3_files/figure-html/fig-log-likelihood-trace-output-2.png" class="img-fluid figure-img">
+<img src="BBKS_FLI_files/figure-html/fig-log-likelihood-trace-output-2.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-log-likelihood-trace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: Log-likelihood trace plot for each chain. The dashed line indicates a burn-in period of a hundred samples.
@@ -424,7 +487,7 @@ Figure&nbsp;4: Log-likelihood trace plot for each chain. The dashed line indicat
 <div id="fig-trace-plot-pixel" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-trace-plot-pixel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="exercise_FLI_3_files/figure-html/fig-trace-plot-pixel-output-1.png" class="img-fluid figure-img">
+<img src="BBKS_FLI_files/figure-html/fig-trace-plot-pixel-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trace-plot-pixel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5: Trace plots for the pixel values at (10, 20) and (25, 10) for each chain. The dashed line indicates the groundtruth value.
@@ -438,7 +501,7 @@ Figure&nbsp;5: Trace plots for the pixel values at (10, 20) and (25, 10) for eac
 <div id="fig-trace-plot-cosmo" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-trace-plot-cosmo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="exercise_FLI_3_files/figure-html/fig-trace-plot-cosmo-output-1.png" class="img-fluid figure-img">
+<img src="BBKS_FLI_files/figure-html/fig-trace-plot-cosmo-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trace-plot-cosmo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;6: Trace plots for the cosmological parameters <span class="math inline">\(A_\mathrm{s}\)</span>, <span class="math inline">\(n_\mathrm{s}\)</span>, and <span class="math inline">\(f_\mathrm{NL}\)</span> for each chain. The dashed line indicates the groundtruth value and the shaded area the <span class="math inline">\(2\sigma\)</span> region of the Gaussian prior.
@@ -456,7 +519,7 @@ Figure&nbsp;6: Trace plots for the cosmological parameters <span class="math inl
 <div id="fig-power-spectrum-signal" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-power-spectrum-signal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="exercise_FLI_3_files/figure-html/fig-power-spectrum-signal-output-1.png" class="img-fluid figure-img">
+<img src="BBKS_FLI_files/figure-html/fig-power-spectrum-signal-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-power-spectrum-signal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;7: Sequential posterior power spectrum of the reconstructed signal. The dashed line indicates the groundtruth power spectrum.
@@ -470,7 +533,7 @@ Figure&nbsp;7: Sequential posterior power spectrum of the reconstructed signal. 
 <div id="fig-power-spectrum-delta" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-power-spectrum-delta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="exercise_FLI_3_files/figure-html/fig-power-spectrum-delta-output-1.png" class="img-fluid figure-img">
+<img src="BBKS_FLI_files/figure-html/fig-power-spectrum-delta-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-power-spectrum-delta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;8: Sequential posterior power spectrum of the reconstructed <span class="math inline">\(\delta\)</span> field. The dashed line indicates the groundtruth power spectrum of the <span class="math inline">\(\delta\)</span> field.
@@ -488,7 +551,7 @@ Figure&nbsp;8: Sequential posterior power spectrum of the reconstructed <span cl
 <div id="fig-ess-pixels" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ess-pixels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="exercise_FLI_3_files/figure-html/fig-ess-pixels-output-1.png" class="img-fluid figure-img">
+<img src="BBKS_FLI_files/figure-html/fig-ess-pixels-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ess-pixels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9: Effective sample size (ESS) for the pixels (10, 20) and (25, 10) in the field for each chain. The dashed line indicates the burn-in period.
@@ -502,7 +565,7 @@ Figure&nbsp;9: Effective sample size (ESS) for the pixels (10, 20) and (25, 10) 
 <div id="fig-ess-cosmo" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ess-cosmo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="exercise_FLI_3_files/figure-html/fig-ess-cosmo-output-1.png" class="img-fluid figure-img">
+<img src="BBKS_FLI_files/figure-html/fig-ess-cosmo-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ess-cosmo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;10: Effective sample size (ESS) for the cosmological parameters <span class="math inline">\(A_\mathrm{s}\)</span>, <span class="math inline">\(n_\mathrm{s}\)</span>, and <span class="math inline">\(f_\mathrm{NL}\)</span> for each chain. The dashed line indicates the burn-in period.
@@ -540,7 +603,7 @@ W \equiv \frac{1}{m} \sum_{j=1}^m s_j^2 \quad \mathrm{where} \quad s_j^2 = \frac
 <li>Potential scale reduction factor: <span class="math inline">\(\widehat{R} \equiv \sqrt{\frac{\widehat{\mathrm{var}}^+}{\widehat{\mathrm{var}}^-}}\)</span></li>
 <li>Test: <span class="math inline">\(\widehat{R} \rightarrow 1\)</span> as <span class="math inline">\(n \rightarrow \infty\)</span></li>
 </ul>
-<div id="e91ecbae" class="cell" data-execution_count="40">
+<div id="95b61463" class="cell" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The Gelman-Rubin function expects (n_chains, n_samples, n_variates)</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Rhat <span class="op">=</span> gelman_rubin(jnp.array([samples_chain[c] <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(N_chains)]))</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -566,14 +629,14 @@ fNL: 1.0003572</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>&lt;&gt;:4: SyntaxWarning: invalid escape sequence '\h'
 &lt;&gt;:4: SyntaxWarning: invalid escape sequence '\h'
-/tmp/ipykernel_506644/2195658240.py:4: SyntaxWarning: invalid escape sequence '\h'
+/tmp/ipykernel_551932/2195658240.py:4: SyntaxWarning: invalid escape sequence '\h'
   ax.set_title("Gelman-Rubin statistic $\hat{R}$")</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div id="fig-gelman-rubin" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gelman-rubin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="exercise_FLI_3_files/figure-html/fig-gelman-rubin-output-2.png" class="img-fluid figure-img">
+<img src="BBKS_FLI_files/figure-html/fig-gelman-rubin-output-2.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gelman-rubin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;11: Gelman-Rubin statistic <span class="math inline">\(\hat{R}\)</span> for the field.
@@ -589,11 +652,11 @@ Figure&nbsp;11: Gelman-Rubin statistic <span class="math inline">\(\hat{R}\)</sp
 <h3 class="anchored" data-anchor-id="visualise-summaries-of-the-chains">Visualise summaries of the chains</h3>
 <p>Now that we have carefully checked the convergence of the MCMC chains, we can visualise the results.</p>
 <p>First, we can use the samples to reconstruct the <span class="math inline">\(\delta\)</span> field and check that it visually matches the truth.</p>
-<div id="fe4d1940" class="cell" data-execution_count="45">
+<div id="b6861478" class="cell" data-execution_count="45">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="exercise_FLI_3_files/figure-html/cell-46-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="BBKS_FLI_files/figure-html/cell-46-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -606,18 +669,18 @@ Figure&nbsp;11: Gelman-Rubin statistic <span class="math inline">\(\hat{R}\)</sp
 &lt;&gt;:10: SyntaxWarning: invalid escape sequence '\m'
 &lt;&gt;:17: SyntaxWarning: invalid escape sequence '\m'
 &lt;&gt;:29: SyntaxWarning: invalid escape sequence '\m'
-/tmp/ipykernel_506644/3114878575.py:10: SyntaxWarning: invalid escape sequence '\m'
+/tmp/ipykernel_551932/3114878575.py:10: SyntaxWarning: invalid escape sequence '\m'
   ax0a.set_title("Groundtruth $\\Phi_\mathrm{L}$")
-/tmp/ipykernel_506644/3114878575.py:17: SyntaxWarning: invalid escape sequence '\m'
+/tmp/ipykernel_551932/3114878575.py:17: SyntaxWarning: invalid escape sequence '\m'
   ax1a.set_title("Empirical mean of $\\Phi_\mathrm{L}$ samples")
-/tmp/ipykernel_506644/3114878575.py:29: SyntaxWarning: invalid escape sequence '\m'
+/tmp/ipykernel_551932/3114878575.py:29: SyntaxWarning: invalid escape sequence '\m'
   ax2a.set_title("Empirical variance of $\\Phi_\mathrm{L}$ samples")</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div id="fig-reconstruction" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reconstruction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="exercise_FLI_3_files/figure-html/fig-reconstruction-output-2.png" class="img-fluid figure-img">
+<img src="BBKS_FLI_files/figure-html/fig-reconstruction-output-2.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reconstruction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;12: Reconstruction of the <span class="math inline">\(\Phi_\mathrm{L}\)</span>, <span class="math inline">\(\Phi_\mathrm{NL}\)</span>, and <span class="math inline">\(\delta\)</span> fields from the initial conditions and cosmological parameters samples. The first row shows the initial conditions, the second row the groundtruth fields, the third row shows the empirical mean of the samples, and the fourth row shows the empirical variance of the samples.
@@ -632,7 +695,7 @@ Figure&nbsp;12: Reconstruction of the <span class="math inline">\(\Phi_\mathrm{L
 <div id="fig-cosmo-params" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cosmo-params-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="exercise_FLI_3_files/figure-html/fig-cosmo-params-output-1.png" class="img-fluid figure-img">
+<img src="BBKS_FLI_files/figure-html/fig-cosmo-params-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cosmo-params-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;13: Posterior samples in the cosmological parameters space. The blue contours show the prior distribution, while the green filled contours show the posterior distribution. The lines indicate the one, two, and three <span class="math inline">\(\sigma\)</span> confidence level. The dashed lines indicate the groundtruth.
@@ -642,11 +705,12 @@ Figure&nbsp;13: Posterior samples in the cosmological parameters space. The blue
 </div>
 </div>
 <p>This result has been obtained sampling all latent variables. It is also possible to extract information at the field-level without relying on high-dimensional sampling of the initial conditions.</p>
+
+
 </section>
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
