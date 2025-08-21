@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: site   # GitHub Pages expects /docs or root
+  render:
+    - BBKS_FLI.py
 
 website:
   title: "Field-Level Inference cosmological toy model"

@@ -205,7 +205,7 @@ window.Quarto = {
 </header>
 
 
-<div id="c83d6ed8" class="cell" data-execution_count="1">
+<div id="37342a0c" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -271,7 +271,7 @@ T(k) = \frac{\log(1 + \alpha q)}{\alpha q} \left(1 + \beta q + (\gamma q)^2 + (\
 <p>with shape parameter <span class="math inline">\(\Gamma = \Omega_m h \exp(-\Omega_b - \sqrt{2h}\Omega_b/\Omega_m)\)</span>. Other cosmological parameters are fixed to the following values:</p>
 <section id="problem-parameters" class="level3">
 <h3 class="anchored" data-anchor-id="problem-parameters">Problem parameters</h3>
-<div id="037dc0c2" class="cell" data-execution_count="5">
+<div id="dd512dc9" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">32</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="fl">1.0</span>  <span class="co"># box size</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The following parameters will be our fiducial values</span></span>
@@ -283,7 +283,7 @@ T(k) = \frac{\log(1 + \alpha q)}{\alpha q} \left(1 + \beta q + (\gamma q)^2 + (\
 </section>
 <section id="cosmological-parameters" class="level3">
 <h3 class="anchored" data-anchor-id="cosmological-parameters">Cosmological parameters</h3>
-<div id="2a3e1d4d" class="cell" data-execution_count="6">
+<div id="25d41e24" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Omega_b <span class="op">=</span> <span class="fl">0.049</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Omega_m <span class="op">=</span> <span class="fl">0.315</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> <span class="fl">0.674</span></span>
@@ -292,7 +292,7 @@ T(k) = \frac{\log(1 + \alpha q)}{\alpha q} \left(1 + \beta q + (\gamma q)^2 + (\
 </section>
 <section id="bbks-parameters" class="level3">
 <h3 class="anchored" data-anchor-id="bbks-parameters">BBKS parameters</h3>
-<div id="5f2c1cda" class="cell" data-execution_count="7">
+<div id="2cd4f2e2" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>shape <span class="op">=</span> Omega_m <span class="op">*</span> h <span class="op">*</span> np.exp(<span class="op">-</span>Omega_b <span class="op">-</span> np.sqrt(<span class="fl">2.0</span> <span class="op">*</span> h) <span class="op">*</span> fb)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">2.34</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> <span class="fl">3.89</span></span>
@@ -316,10 +316,10 @@ d(x) = \delta(x) + n(x), \quad n(x) \sim \mathcal{N}(0, N),
 &lt;&gt;:16: SyntaxWarning: invalid escape sequence '\m'
 &lt;&gt;:9: SyntaxWarning: invalid escape sequence '\m'
 &lt;&gt;:16: SyntaxWarning: invalid escape sequence '\m'
-/tmp/ipykernel_551932/926910477.py:9: SyntaxWarning: invalid escape sequence '\m'
+/tmp/ipykernel_567721/1776581721.py:9: SyntaxWarning: invalid escape sequence '\m'
   ax0.set_title("$\\Phi_\mathrm{L}$")
-/tmp/ipykernel_551932/926910477.py:16: SyntaxWarning: invalid escape sequence '\m'
-  ax1.set_title("$\\Phi_\mathrm{NL}=\\Phi_\mathrm{L}+f_\mathrm{NL}\\Phi_\mathrm{L}^2$")</code></pre>
+/tmp/ipykernel_567721/1776581721.py:16: SyntaxWarning: invalid escape sequence '\m'
+  ax1.set_title("$\\Phi_\mathrm{NL}=\\Phi_\\mathrm{L}+f_\\mathrm{NL}\\Phi_\\mathrm{L}^2$")</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div id="fig-primordial-potential" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -396,7 +396,7 @@ Figure&nbsp;3: Bayesian hierarchical model for field-level inference. Round boxe
 </figure>
 </div>
 <p>In what follows, we will use the following values for the prior of the cosmological parameters. The likelihood is explicitely defined via the choices of distribution from which the parameters (prior) and latent variables are sampled from. Probabilistic programming languages such as <code>pyro</code> or <code>numpyro</code> implement BHMs following the graph structure sketched in <a href="#fig-bhm" class="quarto-xref">Figure&nbsp;3</a>.</p>
-<div id="25318bb7" class="cell" data-execution_count="16">
+<div id="6651890f" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define hyperparameters for the prior</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>A_s_scale <span class="op">=</span> <span class="fl">6e-9</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>f_NL_scale <span class="op">=</span> <span class="fl">2e3</span></span>
@@ -408,32 +408,32 @@ Figure&nbsp;3: Bayesian hierarchical model for field-level inference. Round boxe
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>sigma_f_NL <span class="op">=</span> <span class="fl">0.25</span> <span class="op">*</span> f_NL_scale</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The output of the log-prior, log-likelihood and log-posterior functions is a scalar value and can be found for various examples below.</p>
-<div id="51b6bf4d" class="cell" data-execution_count="19">
+<div id="39f816b1" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test the functions with the ground truth white noise field</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> pack_theta(A_s<span class="op">=</span>A_s, n_s<span class="op">=</span>n_s, f_NL<span class="op">=</span>f_NL, field<span class="op">=</span>white_noise)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>log_prior(theta), log_likelihood(theta, data, noise_variance_field), log_posterior(</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    theta, data, noise_variance_field</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="19">
+<div class="cell-output cell-output-display" data-execution_count="67">
 <pre><code>(Array(-458.70108, dtype=float32),
  Array(-554.5357, dtype=float32),
  Array(-1013.2368, dtype=float32))</code></pre>
 </div>
 </div>
-<div id="3bc7272f" class="cell" data-execution_count="20">
+<div id="1e49e541" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a new white noise field and compute the log-likelihood</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>white_noise_2 <span class="op">=</span> jax.random.normal(jax.random.PRNGKey(<span class="dv">2</span>), (N, N))</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>theta_2 <span class="op">=</span> pack_theta(A_s<span class="op">=</span>A_s, n_s<span class="op">=</span>n_s, f_NL<span class="op">=</span>f_NL, field<span class="op">=</span>white_noise_2)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>log_likelihood(theta_2, data, noise_variance_field), log_prior(theta_2), log_posterior(</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    theta_2, data, noise_variance_field</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="20">
+<div class="cell-output cell-output-display" data-execution_count="68">
 <pre><code>(Array(-2063637.8, dtype=float32),
  Array(-536.7661, dtype=float32),
  Array(-2064174.5, dtype=float32))</code></pre>
 </div>
 </div>
-<div id="752b3a7e" class="cell" data-execution_count="21">
+<div id="a656c444" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the cosmological parameters and compute the log-likelihood</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>A_s_new <span class="op">=</span> <span class="fl">7e-9</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>n_s_new <span class="op">=</span> <span class="fl">0.98</span></span>
@@ -442,7 +442,7 @@ Figure&nbsp;3: Bayesian hierarchical model for field-level inference. Round boxe
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>log_likelihood(theta_3, data, noise_variance_field), log_prior(theta_3), log_posterior(</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    theta_3, data, noise_variance_field</span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="21">
+<div class="cell-output cell-output-display" data-execution_count="69">
 <pre><code>(Array(-2448480.5, dtype=float32),
  Array(-545.32166, dtype=float32),
  Array(-2449025.8, dtype=float32))</code></pre>
@@ -459,17 +459,11 @@ Figure&nbsp;3: Bayesian hierarchical model for field-level inference. Round boxe
 <section id="log-likelihood" class="level5">
 <h5 class="anchored" data-anchor-id="log-likelihood">Log-likelihood</h5>
 <div id="cell-fig-log-likelihood-trace" class="cell" data-execution_count="27">
-<div class="cell-output cell-output-stderr">
-<pre><code>&lt;&gt;:13: SyntaxWarning: invalid escape sequence '\m'
-&lt;&gt;:13: SyntaxWarning: invalid escape sequence '\m'
-/tmp/ipykernel_551932/3802684793.py:13: SyntaxWarning: invalid escape sequence '\m'
-  ax.set_ylabel("$-\\log \mathcal{L}$")</code></pre>
-</div>
 <div class="cell-output cell-output-display">
 <div id="fig-log-likelihood-trace" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-log-likelihood-trace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="BBKS_FLI_files/figure-html/fig-log-likelihood-trace-output-2.png" class="img-fluid figure-img">
+<img src="BBKS_FLI_files/figure-html/fig-log-likelihood-trace-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-log-likelihood-trace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: Log-likelihood trace plot for each chain. The dashed line indicates a burn-in period of a hundred samples.
@@ -603,21 +597,21 @@ W \equiv \frac{1}{m} \sum_{j=1}^m s_j^2 \quad \mathrm{where} \quad s_j^2 = \frac
 <li>Potential scale reduction factor: <span class="math inline">\(\widehat{R} \equiv \sqrt{\frac{\widehat{\mathrm{var}}^+}{\widehat{\mathrm{var}}^-}}\)</span></li>
 <li>Test: <span class="math inline">\(\widehat{R} \rightarrow 1\)</span> as <span class="math inline">\(n \rightarrow \infty\)</span></li>
 </ul>
-<div id="95b61463" class="cell" data-execution_count="40">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The Gelman-Rubin function expects (n_chains, n_samples, n_variates)</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Rhat <span class="op">=</span> gelman_rubin(jnp.array([samples_chain[c] <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(N_chains)]))</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run Gelman-Rubin</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>Rhat_A_s <span class="op">=</span> Rhat[<span class="dv">0</span>]</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>Rhat_n_s <span class="op">=</span> Rhat[<span class="dv">1</span>]</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>Rhat_fNL <span class="op">=</span> Rhat[<span class="dv">2</span>]</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>Rhat_field_flat <span class="op">=</span> Rhat[<span class="dv">3</span>:]  <span class="co"># shape: (N*N,)</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>Rhat_field <span class="op">=</span> Rhat_field_flat.reshape((N, N))</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Gelman-Rubin stats:"</span>)</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"A_s:"</span>, Rhat_A_s)</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"n_s:"</span>, Rhat_n_s)</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"fNL:"</span>, Rhat_fNL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="315f05fb" class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The Gelman-Rubin function expects (n_chains, n_samples, n_variates)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>Rhat <span class="op">=</span> gelman_rubin(jnp.array([samples_chain[c] <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(N_chains)]))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run Gelman-Rubin</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>Rhat_A_s <span class="op">=</span> Rhat[<span class="dv">0</span>]</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>Rhat_n_s <span class="op">=</span> Rhat[<span class="dv">1</span>]</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>Rhat_fNL <span class="op">=</span> Rhat[<span class="dv">2</span>]</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>Rhat_field_flat <span class="op">=</span> Rhat[<span class="dv">3</span>:]  <span class="co"># shape: (N*N,)</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>Rhat_field <span class="op">=</span> Rhat_field_flat.reshape((N, N))</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Gelman-Rubin stats:"</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"A_s:"</span>, Rhat_A_s)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"n_s:"</span>, Rhat_n_s)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"fNL:"</span>, Rhat_fNL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Gelman-Rubin stats:
 A_s: 1.0003575
@@ -626,17 +620,11 @@ fNL: 1.0003572</code></pre>
 </div>
 </div>
 <div id="cell-fig-gelman-rubin" class="cell" data-execution_count="41">
-<div class="cell-output cell-output-stderr">
-<pre><code>&lt;&gt;:4: SyntaxWarning: invalid escape sequence '\h'
-&lt;&gt;:4: SyntaxWarning: invalid escape sequence '\h'
-/tmp/ipykernel_551932/2195658240.py:4: SyntaxWarning: invalid escape sequence '\h'
-  ax.set_title("Gelman-Rubin statistic $\hat{R}$")</code></pre>
-</div>
 <div class="cell-output cell-output-display">
 <div id="fig-gelman-rubin" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gelman-rubin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="BBKS_FLI_files/figure-html/fig-gelman-rubin-output-2.png" class="img-fluid figure-img">
+<img src="BBKS_FLI_files/figure-html/fig-gelman-rubin-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gelman-rubin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;11: Gelman-Rubin statistic <span class="math inline">\(\hat{R}\)</span> for the field.
@@ -652,7 +640,7 @@ Figure&nbsp;11: Gelman-Rubin statistic <span class="math inline">\(\hat{R}\)</sp
 <h3 class="anchored" data-anchor-id="visualise-summaries-of-the-chains">Visualise summaries of the chains</h3>
 <p>Now that we have carefully checked the convergence of the MCMC chains, we can visualise the results.</p>
 <p>First, we can use the samples to reconstruct the <span class="math inline">\(\delta\)</span> field and check that it visually matches the truth.</p>
-<div id="b6861478" class="cell" data-execution_count="45">
+<div id="65ede15c" class="cell" data-execution_count="45">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -662,25 +650,11 @@ Figure&nbsp;11: Gelman-Rubin statistic <span class="math inline">\(\hat{R}\)</sp
 </div>
 </div>
 <div id="cell-fig-reconstruction" class="cell" data-execution_count="46">
-<div class="cell-output cell-output-stderr">
-<pre><code>&lt;&gt;:10: SyntaxWarning: invalid escape sequence '\m'
-&lt;&gt;:17: SyntaxWarning: invalid escape sequence '\m'
-&lt;&gt;:29: SyntaxWarning: invalid escape sequence '\m'
-&lt;&gt;:10: SyntaxWarning: invalid escape sequence '\m'
-&lt;&gt;:17: SyntaxWarning: invalid escape sequence '\m'
-&lt;&gt;:29: SyntaxWarning: invalid escape sequence '\m'
-/tmp/ipykernel_551932/3114878575.py:10: SyntaxWarning: invalid escape sequence '\m'
-  ax0a.set_title("Groundtruth $\\Phi_\mathrm{L}$")
-/tmp/ipykernel_551932/3114878575.py:17: SyntaxWarning: invalid escape sequence '\m'
-  ax1a.set_title("Empirical mean of $\\Phi_\mathrm{L}$ samples")
-/tmp/ipykernel_551932/3114878575.py:29: SyntaxWarning: invalid escape sequence '\m'
-  ax2a.set_title("Empirical variance of $\\Phi_\mathrm{L}$ samples")</code></pre>
-</div>
 <div class="cell-output cell-output-display">
 <div id="fig-reconstruction" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reconstruction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="BBKS_FLI_files/figure-html/fig-reconstruction-output-2.png" class="img-fluid figure-img">
+<img src="BBKS_FLI_files/figure-html/fig-reconstruction-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reconstruction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;12: Reconstruction of the <span class="math inline">\(\Phi_\mathrm{L}\)</span>, <span class="math inline">\(\Phi_\mathrm{NL}\)</span>, and <span class="math inline">\(\delta\)</span> fields from the initial conditions and cosmological parameters samples. The first row shows the initial conditions, the second row the groundtruth fields, the third row shows the empirical mean of the samples, and the fourth row shows the empirical variance of the samples.
