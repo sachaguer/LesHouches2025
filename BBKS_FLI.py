@@ -436,14 +436,14 @@ phiNL = phi + f_NL * phi**2
 vmin = -max(-phi.min(), phi.max(), phiNL.min(), phiNL.max())
 vmax = max(-phi.min(), phi.max(), phiNL.min(), phiNL.max())
 im0 = ax0.imshow(phi, vmin=vmin, vmax=vmax, origin="lower", cmap=planck)
-ax0.set_title("$\\Phi_\mathrm{L}$")
+ax0.set_title("$\\Phi_\\mathrm{L}$")
 divider = make_axes_locatable(ax0)
 cax0 = divider.append_axes("right", size="5%", pad=0.1)
 cbar0 = fig.colorbar(im0, cax=cax0)
 
 # visualise the phiNL field
 im1 = ax1.imshow(phiNL, vmin=vmin, vmax=vmax, origin="lower", cmap=planck)
-ax1.set_title("$\\Phi_\mathrm{NL}=\\Phi_\\mathrm{L}+f_\\mathrm{NL}\\Phi_\\mathrm{L}^2$")
+ax1.set_title("$\\Phi_\\mathrm{NL}=\\Phi_\\mathrm{L}+f_\\mathrm{NL}\\Phi_\\mathrm{L}^2$")
 divider = make_axes_locatable(ax1)
 cax1 = divider.append_axes("right", size="5%", pad=0.1)
 cbar1 = fig.colorbar(im1, cax=cax1)
