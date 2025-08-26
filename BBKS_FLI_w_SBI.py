@@ -294,7 +294,6 @@ def build_power_spectrum(N, A_s, n_s):
     Pk = jnp.where(k == 0, 0, Pk)
     return Pk
 
-
 @jax.jit
 def phiL_from_real_noise(white_noise, A_s, n_s):
     """
@@ -409,6 +408,7 @@ def data_model(white_noise, A_s, n_s, f_NL, D1=D1):
     delta = delta_from_phi(phi, f_NL, D1=D1)
     return delta
 
+
 # %%
 key = jax.random.PRNGKey(12)
 white_noise = jax.random.normal(key, (N, N))
@@ -427,14 +427,14 @@ phiNL = phi + f_NL * phi**2
 vmin = -max(-phi.min(), phi.max(), phiNL.min(), phiNL.max())
 vmax = max(-phi.min(), phi.max(), phiNL.min(), phiNL.max())
 im0 = ax0.imshow(phi, vmin=vmin, vmax=vmax, origin="lower", cmap=planck)
-ax0.set_title("$\\Phi_\mathrm{L}$")
+ax0.set_title("$\\Phi_\\mathrm{L}$")
 divider = make_axes_locatable(ax0)
 cax0 = divider.append_axes("right", size="5%", pad=0.1)
 cbar0 = fig.colorbar(im0, cax=cax0)
 
 # visualise the phiNL field
 im1 = ax1.imshow(phiNL, vmin=vmin, vmax=vmax, origin="lower", cmap=planck)
-ax1.set_title("$\\Phi_\mathrm{NL}=\\Phi_\mathrm{L}+f_\mathrm{NL}\\Phi_\mathrm{L}^2$")
+ax1.set_title("$\\Phi_\\mathrm{NL}=\\Phi_\\mathrm{L}+f_\mathrm{NL}\\Phi_\\mathrm{L}^2$")
 divider = make_axes_locatable(ax1)
 cax1 = divider.append_axes("right", size="5%", pad=0.1)
 cbar1 = fig.colorbar(im1, cax=cax1)
@@ -766,7 +766,7 @@ We now generate a dataset of cosmological parameters and simulated field $(\bold
 """
 
 # %%
-n_simulations = 20_000
+n_simulations = 10_000
 master_key = jax.random.PRNGKey(42)
 rng_keys = jax.random.split(master_key, num=n_simulations)
 
@@ -925,7 +925,8 @@ num_epochs = 500 #Number of times the network will go through the whole dataset
 
 metrics, density_network = inference.train(
     checkpoint_path=CHECKPOINT_PATH,
-    num_epochs=num_epochs
+    num_epochs=num_epochs,
+    training_batch_size=25
 )
 
 # %%
